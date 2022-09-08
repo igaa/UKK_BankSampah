@@ -1,0 +1,77 @@
+﻿@model IEnumerable<KKN_UKK.Models.Master.MasterSampah>
+
+@{
+    ViewData["Title"] = "Master Sampah";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    <div class="card-header">
+        <a asp-action="CreateSampah" class="btn btn-sm btn-primary">Create New</a>
+        <br />
+    </div>
+    <div class="card-body">
+
+        <table class="table table-responsive table-striped" id="Datatables">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nama)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Harga)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Unit)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nama)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Harga)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <span data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
+                                <div class="dropdown-menu">
+                                    <a asp-action="EditSampahById" class="dropdown-item" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-action="GetSampahById" class="dropdown-item" asp-route-id="@item.Id">Details</a>
+                                    <a asp-action="DeleteSampahById" class="dropdown-item" asp-route-id="@item.Id">Delete</a>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Script{
+    <script>
+    $(document).ready(function () {
+
+        $('#Datatables').DataTable();
+    });
+    </script>
+
+}
+

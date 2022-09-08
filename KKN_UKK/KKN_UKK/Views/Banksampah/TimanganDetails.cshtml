@@ -1,0 +1,84 @@
+﻿@model KKN_UKK.Models.Transaksi.T_TransaksiTimbangan
+
+@{
+    ViewData["Title"] = "Tabungan Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .card-header {
+        background-color: white;
+        text-align: right;
+    }
+</style>
+
+<div class="card" style="width: auto;">
+    @*<div class="card-header">
+            <a asp-action="TimbanganCreate" class="btn btn-primary">Create New</a>
+            <br />
+        </div>*@
+    <div class="card-body">
+        <div>
+            <h4>@ViewData["Title"]</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Location)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Location)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Items)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt class="col-sm-2">
+                   Harga
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.HargaSatuan)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Qty)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Qty)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Unit)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Unit)
+                </dd>
+                <dt class="col-sm-2">
+                   Total Harga
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.TotalHarga)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="TimbanganEdit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </div>
+</div>
+<br />
+
+        

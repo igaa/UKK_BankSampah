@@ -1,0 +1,79 @@
+﻿@model KKN_UKK.Models.User.Profile
+
+@{
+    ViewData["Title"] = "EditProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    <div class="card-body">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="UpdateProfile">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="NIK" class="control-label"></label>
+                        <input asp-for="NIK" class="form-control" />
+                        <span asp-validation-for="NIK" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Firstname" class="control-label"></label>
+                        <input asp-for="Firstname" class="form-control" />
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MidleName" class="control-label"></label>
+                        <input asp-for="MidleName" class="form-control" />
+                        <span asp-validation-for="MidleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Birtdate" class="control-label"></label>
+                        <input asp-for="Birtdate" class="form-control" type="date" />
+                        <span asp-validation-for="Birtdate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="JenisKelamin" class="control-label ">Jenis Kelamin</label>
+                        <select asp-for="JenisKelamin" type="date" class="form-control">
+                            <option value="">Jenis Kelamin</option>
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                        <span asp-validation-for="JenisKelamin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Alamat" class="control-label"></label>
+                        <input asp-for="Alamat" class="form-control" />
+                        <span asp-validation-for="Alamat" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Profil"  asp-route-id="@ViewBag.Id">Back to Profil</a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<KKN_UKK.Models.Transaksi.T_TransaksiTimbangan>
+
+@{
+    ViewData["Title"] = "Transaksi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Transaksi</h1>
+
+
+<div class="card" style="width: auto;">
+    <div class="card-body">
+        <table class="table" id="Datatables">
+            <thead>
+                <tr>
+                    <th>
+                        Tanggal
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NasabahId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NamaNasabah)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HargaSatuan)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Qty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalHarga)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Unit)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreateAt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NasabahId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NamaNasabah)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Items)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HargaSatuan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalHarga)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Script{
+    <script>
+    $(document).ready(function () {
+
+        $('#Datatables').DataTable();
+    });
+    </script>
+
+}

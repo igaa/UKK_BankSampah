@@ -1,0 +1,87 @@
+﻿@model IEnumerable<KKN_UKK.Models.User.UserModels>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    <div class="card-header">
+        <a asp-action="Create" class="btn btn-sm btn-primary">Create New</a>
+        <br />
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive table-striped" id="Datatables">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
+                    <th>
+                       Employe
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEmploye)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+
+                    <td>
+                        <div class="btn-group">
+                            <span data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
+                            <div class="dropdown-menu">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">Detail</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="dropdown-item">Delete</a>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Script{
+    <script>
+    $(document).ready(function () {
+
+        $('#Datatables').DataTable();
+    });
+   </script>
+}

@@ -1,0 +1,220 @@
+﻿@model KKN_UKK.Models.Transaksi.T_TransaksiTimbangan
+
+@{
+    ViewData["Title"] = "Tabungan Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    @*<div class="card-header">
+            <a asp-action="TimbanganCreate" class="btn btn-primary">Create New</a>
+            <br />
+        </div>*@
+    <div class="card-body">
+        <h4>@ViewData["Title"]</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="EditTransaksi">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Location" class="control-label"></label>
+                        <select asp-for="Location" class="form-control">
+                            <option value="">Select Location</option>
+                            @foreach (var item in ViewBag.Location)
+                            {
+                                <option value="@item.Nama">@item.Nama</option>
+
+                            }
+                        </select>
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AccountNumber" class="control-label"> Account Number</label>
+                        <input asp-for="NasabahId" id="IdNasabah" class="form-control" type="hidden"  />
+                        <input asp-for="AccountNumber" id="AccountNumber" class="form-control" placeholder="Press Tab to select" />
+                        <br />
+                        <input asp-for="NamaNasabah" id="NasabahName" class="form-control" readonly />
+                        <span asp-validation-for="AccountNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Items" class="control-label"></label>
+                        <select asp-for="Items" class="form-control" onchange="SelectMasterSampah(); ">
+                            <option value="">Select Items</option>
+                            @foreach (var item in ViewBag.MasterSampah)
+                            {
+                                <option value="@item.Id"> @item.Nama</option>
+                            }
+
+                        </select>
+                        <span asp-validation-for="Items" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label"></label>
+                        <input asp-for="Category" class="form-control" readonly />
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HargaSatuan" class="control-label"> Harga Satuan</label>
+                        <input asp-for="HargaSatuan" class="form-control" readonly />
+                        <span asp-validation-for="HargaSatuan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Qty" class="control-label"></label>
+                        <input asp-for="Qty" class="form-control" id="Qty" />
+                        <span asp-validation-for="Qty" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Unit" class="control-label"></label>
+                        <input asp-for="Unit" class="form-control" readonly />
+                        <span asp-validation-for="Unit" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TotalHarga" class="control-label"> Total Harga</label>
+                        <input asp-for="TotalHarga" class="form-control" readonly />
+                        <span asp-validation-for="TotalHarga" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"> </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PickNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nasabah</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nomor Rekening</th>
+                            <th>Nama Nasabah</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="NasabahList">
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Script {
+    <script>
+
+        $(document).ready(function () {
+            EventsListener();
+        });
+
+
+        function SelectMasterSampah() {
+
+            var Id = $('#Items').val();
+            var url = 'GetMasterItems?Id=' + Id;
+            $.get(url).done(function (response) {
+
+                if (response.status) {
+                    var dt = response.data[0];
+                    console.log(response.data);
+                    $('#Category').val(dt.category);
+                    $('#HargaSatuan').val(dt.harga);
+                    $('#Unit').val(dt.unit);
+                }
+
+            }).fail(function (a, b, c) {
+                alert("Failed Get Data");
+            });
+
+        }
+
+        function EventsListener() {
+
+            $(document).on('click', '.btnChoose', function () {
+                var id = $(this).data("id");
+                var number = $(this).data("number");
+                var nama = $(this).data("nama");
+
+                $("#IdNasabah").val(id);
+                $("#AccountNumber").val(number);
+                $("#NasabahName").val(nama);
+                $('#PickNasabah').modal('hide');
+            });
+
+            $(document).on("keyup", "#Qty", function () {
+                var qty = $(this).val();
+                var harga = $('#HargaSatuan').val();
+                console.log(qty);
+                console.log(harga);
+
+                var count = parseFloat(harga) * parseFloat(qty);
+
+                console.log(count);
+                //var count = parseFloat(harga) * parseFloat(qty);
+                $('#TotalHarga').val(count);
+            });
+
+            $(document).on('keydown', '#AccountNumber', function () {
+                var param = $('#AccountNumber').val();
+
+                console.log(event.keyCode);
+                if (event.keyCode == 9) {
+                    $('#NasabahList').html('');
+                    var row = '';
+                    var url = '../NasabahByParams?param=' + param;
+                    console.log(url); 
+                    $('#PickNasabah').modal('show');
+                    $.get(url).done(function (response) {
+
+                        if (response.status) {
+
+                            console.log(response.data);
+                            for (var i = 0; i < response.data.length; i++) {
+
+
+
+                                var dt = response.data[i];
+                                var no = i + 1;
+
+                                var btnChoose = '<span data-id="' + dt.id + '" data-number="' + dt.accountNumber + '" data-nama="' + dt.name + '" class="btnChoose"><i class="fas fa-check"></i></span>'
+
+                                row += '<tr><td>' + no + '</td><td>' + dt.accountNumber + '</td><td>' + dt.name + '</td><td>' + btnChoose + '</td></tr>';
+                            }
+                        }
+
+                        $('#NasabahList').append(row);
+
+                    }).fail(function (a, b, c) {
+                        alert("Failed Get Data");
+                    });
+                }
+
+            });
+        }
+    </script>
+}
+

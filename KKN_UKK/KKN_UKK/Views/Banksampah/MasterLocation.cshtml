@@ -1,0 +1,70 @@
+﻿@model IEnumerable<KKN_UKK.Models.Master.MasterLocations>
+
+@{
+    ViewData["Title"] = "MasterLocation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    <div class="card-header">
+        <a asp-action="CreateLocation" class="btn btn-sm btn-primary">Create New</a>
+        <br />
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive table-striped" id="Datatables">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nama)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alamat)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nama)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Alamat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <span data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></span>
+                                <div class="dropdown-menu">
+                                    <a asp-action="EditLocation" class="dropdown-item" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-action="DetailLocation" class="dropdown-item" asp-route-id="@item.Id">Details</a>
+                                    <a asp-action="DeleteLocation" class="dropdown-item" asp-route-id="@item.Id">Delete</a>
+                                </div>
+                            </div>
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Script{
+    <script>
+    $(document).ready(function () {
+
+        $('#Datatables').DataTable();
+    });
+    </script>
+
+}

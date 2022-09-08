@@ -1,0 +1,47 @@
+﻿@model KKN_UKK.Models.Transaksi.T_Mutasi
+
+@{
+    ViewData["Title"] = "Detail Penarikan Dana";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="width: auto;">
+    <div class="card-body">
+        <h4> @ViewData["Title"]</h4>
+        <div>
+
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.NamaNasabah)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.NamaNasabah)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Jumlah)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Jumlah)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Decription)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Decription)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="EditPencarian" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="PenarikanDana">Back to List</a>
+        </div>
+    </div>
+</div>
+
