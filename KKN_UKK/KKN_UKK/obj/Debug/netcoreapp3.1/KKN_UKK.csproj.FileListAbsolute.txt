@@ -334,7 +334,6 @@ C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Users\
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Users\Delete.cshtml.g.cs
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Users\Profile.cshtml.g.cs
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Users\EditProfile.cshtml.g.cs
-C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\scopedcss\bundle\KKN_UKK.styles.css
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Nasabah\Index.cshtml.g.cs
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\System.CodeDom.dll
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
@@ -396,3 +395,8 @@ C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeA
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\Razor\Views\Report\Transaksi.cshtml.g.cs
+C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\obj\Debug\netcoreapp3.1\scopedcss\bundle\KKN_UKK.styles.css
+C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\ClosedXML.dll
+C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\DocumentFormat.OpenXml.dll
+C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
+C:\Git\UKK_BankSampah\KKN_UKK\KKN_UKK\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll

@@ -10,6 +10,11 @@ namespace KKN_UKK.Models
         public string datapost {get; set; }
     }
 
+    public class SearchModels
+    {
+        public string search { get; set;  }
+    }
+
     public class PostModels
     {
         public string param { get; set; }

@@ -60,4 +60,23 @@ namespace KKN_UKK.Models.Transaksi
         public string Description { get; set; }
 
     }
+
+    public class TransaksiTimbangan : ModelHelpers
+    {
+        public int Id { get; set; }
+        public string Location { get; set; }
+        public int NasabahId { get; set; }
+        public string NamaNasabah { get; set; }
+        public string AccountNumber { get; set; }
+        public string Items { get; set; }
+        public string itemName { get; set;  }
+        public string Category { get; set; }
+        public decimal HargaSatuan { get; set; }
+        public decimal Qty { get; set; }
+        public decimal TotalHarga { get; set; }
+        public string Unit { get; set; }
+        public string Description { get; set; }
+
+    }
+
 }

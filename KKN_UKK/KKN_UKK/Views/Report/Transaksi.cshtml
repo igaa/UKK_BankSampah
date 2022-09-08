@@ -1,16 +1,41 @@
 ﻿@model IEnumerable<KKN_UKK.Models.Transaksi.T_TransaksiTimbangan>
-
+@*@model KKN_UKK.Models.SearchParameter*@
 @{
     ViewData["Title"] = "Transaksi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Transaksi</h1>
-
 
 <div class="card" style="width: auto;">
     <div class="card-body">
-        <table class="table" id="Datatables">
+        <form id="SearchForm">
+            <div class="col-md-12 row">
+                <div class="form-group row col-md-12">
+                    <label for="StartDate" style="text-align: left; margin-top: 7px;" class="col-md-2">Start Date : </label>
+                    <input id="startDate" name="startDate" class="form-control col-md-5" type="date" />
+
+                </div>
+                <div class="form-group row col-md-12">
+                    <label for="endDate" style="text-align: left; margin-top: 7px;" class="col-md-2">End Date : </label>
+                    <input id="endDate" name="endDate" class="form-control col-md-5" type="date"  />
+                </div>
+                <div class="form-group row col-md-12">
+                    <label for="nasabahId" style="text-align: left; margin-top: 7px;" class="col-md-2">Nasabah : </label>
+                    <select id="nasabahId" name="nasabahId" class="form-control col-md-5">
+                        <option value="">All Nasabah</option>
+                    </select>
+                </div>
+                <div class="form-group row col-md-12 row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3">
+                        <button class="btn btn-sm btn-primary" id="Preview" type="submit"> Preview </button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-responsive" id="Datatables">
             <thead>
                 <tr>
                     <th>
@@ -21,13 +46,7 @@
                         @Html.DisplayNameFor(model => model.Location)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.NasabahId)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.NamaNasabah)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AccountNumber)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Items)
@@ -42,72 +61,98 @@
                         @Html.DisplayNameFor(model => model.Qty)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.TotalHarga)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Unit)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Description)
+                        @Html.DisplayNameFor(model => model.TotalHarga)
                     </th>
+
 
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in Model)
+            <tbody id="previewtbl">
+                @*@foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreateAt)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Location)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NasabahId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NamaNasabah)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AccountNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Items)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HargaSatuan)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Qty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TotalHarga)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Unit)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-
-
-                    </tr>
-                }
+                    <tr><td></td> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                }*@
             </tbody>
         </table>
+        <div class=" col-md-12" style="text-align: right; margin-top: 30px; ">
+            <button class="btn btn-sm btn-primary" id="Export"> Export Excel </button>
+        </div>
+
+       
     </div>
 </div>
 
 @section Script{
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $('#Datatables').DataTable();
-    });
+            EventsListener();
+
+            $('#Datatables').DataTable();
+
+            $('.date-picker').datetimepicker({
+                format: 'D/M/YYYY',
+                useCurrent: true, 
+            });
+
+        });
+
+        var PreviewData = [];
+
+        $("#SearchForm").submit(function (e) {
+            e.preventDefault();
+            $('#previewtbl').html(''); 
+            var url = "../Report/Preview";
+            var data = JSON.stringify($("#SearchForm").serializeArray());
+            $.post(url, { search: data }).done(function (response) {
+
+                PreviewData = response.data; 
+                var row = ''; 
+                for (var i = 0; i < response.data.length; i++) {
+                    
+                    var dt = response.data[i];
+                    console.log(dt); 
+                    row += '<tr><td>' + moment(dt.createAt).format('DD/MM/yyyy') + '</td><td>' + dt.location+'</td> <td>' + dt.namaNasabah + '</td><td>' + dt.itemName + '</td><td>' + dt.category + '</td><td>' + dt.hargaSatuan + '</td><td>' + dt.qty + '</td><td>' + dt.unit + '</td><td>' + dt.totalHarga+'</td></tr>';
+                }
+                $('#previewtbl').append(row); 
+                console.log(response);
+            }).fail(function (a, b, c) {
+
+                alert("failed get data");
+
+            });
+            
+        }); 
+
+        function EventsListener() {
+            $(document).on("click", "#Export", function () {
+                if (PreviewData.length > 0) {
+
+                    var url = "../Report/ExportTransaksiXls";
+                    $.post(url, { datapost: JSON.stringify(PreviewData) }).done(function (response) {
+                        console.log(response.data);
+                        if (response.status) {
+
+                            window.open(response.data); 
+
+                        } else {
+                            alert(response.message); 
+                        }
+
+                    }).fail(function (a, b, c) {
+                        alert("Failed Export Excel!"); 
+
+                    });
+                } else {
+                    alert("No data to export"); 
+                }
+                console.log("Export"); 
+
+            });
+        }
     </script>
 
 }

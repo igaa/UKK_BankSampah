@@ -86,98 +86,114 @@
                     <a class="nav-link" href="~/Banksampah/MasterLocation"><i class="fas fa-location-arrow"></i><span>Lokasi Bank Sampah</span></a>
                     <a class="nav-link" href="~/BankSampah/MasterSampah"><i class="far fa-list-alt"></i><span>Master Sampah</span></a>
                     <a class="nav-link" href="~/Master/Product"><i class="fas fa-list"></i><span>Category</span></a>
-                }
-                else
-                {
-                    <a class="nav-link" href="~/Nasabah/Index"><i class="fas fa-list"></i><span>Riwayat Transaksi</span></a>
-                }
-
-            </li>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item hide">
-
-
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span>Bank Sampah</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="~/Banksampah/Index">Tabungan</a>
-                        <a class="collapse-item" href="~/Banksampah/PenarikanDana">Penarikan Dana</a>
-                        <a class="collapse-item" href="~/Banksampah/ListNasabah">Nasabah</a>
-                        <a class="collapse-item" href="~/Banksampah/MasterLocation">Lokasi Bank Sampah</a>
-                        <a class="collapse-item" href="~/BankSampah/MasterSampah">Master Sampah</a>
-                        <a class="collapse-item" href="~/Master/Product">Category</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item hide">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                   aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-tree"></i>
-                    <span>Buruan Sae</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        @* <h6 class="collapse-header">Buruan Sae:</h6>*@
-                        <a class="collapse-item" href="~/Buruansae/Index">Monitoring</a>
-                        <a class="collapse-item" href="~/Buruansae/Panen">Panen</a>
-                        <a class="collapse-item" href="~/Buruansae/Penjualan">Penjualan</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item hide">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOdf"
-                   aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-tint"></i>
-                    <span>ODF</span>
-                </a>
-                <div id="collapseOdf" class="collapse" aria-labelledby="headingUtilities"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        @* <h6 class="collapse-header">Buruan Sae:</h6>*@
-                        <a class="collapse-item" href="~/Odf/Index">Monitoring</a>
-                        @*<a class="collapse-item" href="utilities-border.html">Persentase</a>*@
-                    </div>
-                </div>
-            </li>
-
-
-
-
-            @if (HttpContextAccessor.HttpContext.Session.GetString("_isEmploye").ToLower() == "true")
-            {
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Master
-                </div>
 
                 <li class="nav-item">
 
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Setting</span>
+                        <i class="far fa-file-alt"></i>
+                        <span>Laporan</span>
                     </a>
-                    <div id="collapseMaster" class="collapse" aria-labelledby="headingUtilities"
+                    <div id="collapseReport" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="~/Users/Index">Users</a>
+                            <a class="collapse-item" href="~/Report/Transaksi">Report Transaksi</a>
+                            <a class="collapse-item" href="~/Users/Index">Report Items </a>
                         </div>
                     </div>
                 </li>
             }
+            else
+            {
+                <a class="nav-link" href="~/Nasabah/Index"><i class="fas fa-list"></i><span>Riwayat Transaksi</span></a>
+            }
+
+                </li>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item hide">
+
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Bank Sampah</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="~/Banksampah/Index">Tabungan</a>
+                            <a class="collapse-item" href="~/Banksampah/PenarikanDana">Penarikan Dana</a>
+                            <a class="collapse-item" href="~/Banksampah/ListNasabah">Nasabah</a>
+                            <a class="collapse-item" href="~/Banksampah/MasterLocation">Lokasi Bank Sampah</a>
+                            <a class="collapse-item" href="~/BankSampah/MasterSampah">Master Sampah</a>
+                            <a class="collapse-item" href="~/Master/Product">Category</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item hide">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                       aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-tree"></i>
+                        <span>Buruan Sae</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @* <h6 class="collapse-header">Buruan Sae:</h6>*@
+                            <a class="collapse-item" href="~/Buruansae/Index">Monitoring</a>
+                            <a class="collapse-item" href="~/Buruansae/Panen">Panen</a>
+                            <a class="collapse-item" href="~/Buruansae/Penjualan">Penjualan</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <li class="nav-item hide">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOdf"
+                       aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-tint"></i>
+                        <span>ODF</span>
+                    </a>
+                    <div id="collapseOdf" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @* <h6 class="collapse-header">Buruan Sae:</h6>*@
+                            <a class="collapse-item" href="~/Odf/Index">Monitoring</a>
+                            @*<a class="collapse-item" href="utilities-border.html">Persentase</a>*@
+                        </div>
+                    </div>
+                </li>
+
+
+
+
+                @if (HttpContextAccessor.HttpContext.Session.GetString("_isEmploye").ToLower() == "true")
+                {
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        Master
+                    </div>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                           aria-expanded="true" aria-controls="collapseUtilities">
+                            <i class="fas fa-fw fa-wrench"></i>
+                            <span>Setting</span>
+                        </a>
+                        <div id="collapseMaster" class="collapse" aria-labelledby="headingUtilities"
+                             data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="~/Users/Index">Users</a>
+                            </div>
+                        </div>
+                    </li>
+                }
 
 
 
@@ -186,12 +202,12 @@
 
 
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
 
 
 
-        </ul>
+            </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -379,7 +395,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> @HttpContextAccessor.HttpContext.Session.GetString("_Name")</span>
-                               @* <img class="img-profile rounded-circle" src="img/undraw_profile.svg">*@
+                                @* <img class="img-profile rounded-circle" src="img/undraw_profile.svg">*@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -449,6 +465,7 @@
     </div>
 
     <script src="~/lib/vendor/jquery/jquery.min.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
     <script src="~/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/lib/vendor/jquery-easing/jquery.easing.min.js"></script>
