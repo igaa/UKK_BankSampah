@@ -13,7 +13,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using System.IO; 
+using System.IO;
+using KKN_UKK.Models.Report;
 
 namespace KKN_UKK.Controllers
 {
@@ -39,6 +40,8 @@ namespace KKN_UKK.Controllers
                 string page = HttpContext.Request.Query["startDate"].ToString();
                 List<T_TransaksiTimbangan> list = new List<T_TransaksiTimbangan>();
 
+                ViewBag.listNasabah = db.M_Nasabah.ToList(); 
+
                 return View(list);
             }
             else
@@ -52,7 +55,15 @@ namespace KKN_UKK.Controllers
         {
             if (HttpContext.Session.GetInt32(accountInfo.UserIdSessions) != null)
             {
-                return View();
+                DateTime StartDate = DateTime.MinValue;
+                DateTime EndDate = DateTime.MinValue;
+                //ViewBag.StartDate = StartDate.ToString("dd/MM/yyyy");
+                //ViewBag.EndDate = EndDate.ToString("dd/MM/yyyy"); 
+
+                IEnumerable<LaporanHarianBarang> lst = new List<LaporanHarianBarang>(); 
+
+                //List<LaporanHarianBarang> data = JsonConvert.SerializeObject(StrObj);  //JsonSerializer.Serialize<List<LaporanHarianBarang>>(StrObj);                 //List<LaporanHarianBarang> data = JsonSerializer.Serialize<List<LaporanHarianBarang>>(StrObj); 
+                return View(lst);
             }
             else
             {
@@ -62,9 +73,49 @@ namespace KKN_UKK.Controllers
         }
 
 
+        [HttpPost]
+        public APIResponse PreviewItems([FromForm] SearchModels form)
+        {
+            try
+            {
+                List<FieldModels> forms = JsonConvert.DeserializeObject<List<FieldModels>>(form.search);
+
+                var StartDate = FormValue.Get(forms, "startDate");
+                var EndDate = FormValue.Get(forms, "endDate");
+                var NasabahId = FormValue.Get(forms, "nasabahId");
+
+                DateTime dts = DateTime.MinValue;
+                DateTime dte = DateTime.MinValue; 
+
+                if (!string.IsNullOrEmpty(StartDate) && !string.IsNullOrEmpty(EndDate))
+                {
+                    dts = Convert.ToDateTime(StartDate);
+                    dte = Convert.ToDateTime(EndDate); 
+
+                }
+
+                var query = db.LaporanHarianQuery(dts, dte);
+
+                return new APIResponse
+                {
+                    data = query,
+                    message = "Success",
+                    status = true,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new APIResponse
+                {
+                    message = ex.Message,
+                    status = false,
+                };
+            }
+
+        }
 
 
-        
 
         [HttpPost]
         public APIResponse Preview([FromForm] SearchModels form)
@@ -186,6 +237,68 @@ namespace KKN_UKK.Controllers
                 {
                     message = string.Format("Failed Export Data ! Details : {0}", ex.Message), 
                     status = false, 
+                };
+            }
+
+        }
+        public APIResponse ExportItemsXls([FromForm] PostModels data)
+        {
+            try
+            {
+                //SearchParameter param = JsonConvert.DeserializeObject<SearchParameter>(data.param);
+                List<LaporanHarianBarang> models = JsonConvert.DeserializeObject<List<LaporanHarianBarang>>(data.datapost);
+                string wwwPath = this._webHostEnvironment.WebRootPath;
+
+                var url = "";
+                var templatePath = wwwPath + "\\Template\\TEMPLATE2.xlsx";
+                using (XLWorkbook workbook = new XLWorkbook(templatePath))
+                {
+                    var sheet = workbook.Worksheet(1);
+                    var no = 0;
+                    sheet.Cell("B1").Value = data.StartDate;
+                    sheet.Cell("B2").Value = data.EndDate;
+                    foreach (var item in models)
+                    {
+                        no += 1;
+                        int row = no + 3;
+                        sheet.Cell("A" + row).Value = no;
+                        sheet.Cell("B" + row).Value = item.ItemsName;
+                        sheet.Cell("C" + row).Value = item.HargaSatuan;
+                        sheet.Cell("D" + row).Value = item.Qty;
+                        sheet.Cell("E" + row).Value = item.Unit;
+                        sheet.Cell("F" + row).Value = item.TotalHarga;
+
+                    }
+
+
+                    //IHostingEnvironment env; 
+                    var filename = "Laporan-Items-" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
+
+                    var OutPath = wwwPath + "\\Export\\" + filename;
+
+                    if (System.IO.File.Exists(OutPath))
+                    {
+                        System.IO.File.Delete(OutPath);
+                    }
+
+                    workbook.SaveAs(OutPath);
+                    url = "../Export/" + filename;
+                }
+
+                return new APIResponse
+                {
+                    data = url,
+                    message = "Succes Export",
+                    status = true,
+
+                };
+            }
+            catch (Exception ex)
+            {
+                return new APIResponse
+                {
+                    message = string.Format("Failed Export Data ! Details : {0}", ex.Message),
+                    status = false,
                 };
             }
 

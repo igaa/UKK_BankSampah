@@ -52,6 +52,7 @@ namespace KKN_UKK.Models.Transaksi
         public string NamaNasabah { get; set; }
         public string AccountNumber { get; set; }
         public string Items { get; set; }
+        public string ItemsName { get; set;  }
         public string Category { get; set;}
         public decimal HargaSatuan { get; set; }
         public decimal Qty { get; set; }

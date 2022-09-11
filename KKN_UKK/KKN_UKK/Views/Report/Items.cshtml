@@ -1,10 +1,9 @@
-﻿@model IEnumerable<KKN_UKK.Models.Transaksi.T_TransaksiTimbangan>
-@*@model KKN_UKK.Models.SearchParameter*@
+﻿@model IEnumerable<KKN_UKK.Models.Report.LaporanHarianBarang>
+
 @{
-    ViewData["Title"] = "Transaksi";
+    ViewData["Title"] = "Items";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="card" style="width: auto;">
     <div class="card-body">
@@ -12,22 +11,22 @@
             <div class="col-md-12 row">
                 <div class="form-group row col-md-12">
                     <label for="StartDate" style="text-align: left; margin-top: 7px;" class="col-md-2">Start Date : </label>
-                    <input id="startDate" name="startDate" class="form-control col-md-5" type="date" />
+                    <input id="startDate" name="startDate" class="form-control col-md-5" type="date"  />
 
                 </div>
                 <div class="form-group row col-md-12">
                     <label for="endDate" style="text-align: left; margin-top: 7px;" class="col-md-2">End Date : </label>
                     <input id="endDate" name="endDate" class="form-control col-md-5" type="date"  />
                 </div>
-                <div class="form-group row col-md-12">
+                <div class="form-group row col-md-12 hide">
                     <label for="nasabahId" style="text-align: left; margin-top: 7px;" class="col-md-2">Nasabah : </label>
                     <select id="nasabahId" name="nasabahId" class="form-control col-md-5">
                         <option value="">All Nasabah</option>
 
-                        @foreach (var item in ViewBag.listNasabah)
+                        @*@foreach (var item in ViewBag.listNasabah)
                         {
                             <option value="@item.id">@item.Name</option>
-                        }
+                        }*@
                     </select>
                 </div>
                 <div class="form-group row col-md-12 row">
@@ -39,25 +38,11 @@
                 </div>
             </div>
         </form>
-
-        <table class="table table-responsive" id="Datatables">
+        <table class="table" id="Datatables">
             <thead>
                 <tr>
                     <th>
-                        Tanggal
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Location)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NamaNasabah)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Items)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category)
+                        @Html.DisplayNameFor(model => model.ItemsName)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.HargaSatuan)
@@ -71,25 +56,37 @@
                     <th>
                         @Html.DisplayNameFor(model => model.TotalHarga)
                     </th>
-
-
                 </tr>
             </thead>
             <tbody id="previewtbl">
-                @*@foreach (var item in Model)
+                @foreach (var item in Model)
                 {
-                    <tr><td></td> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                }*@
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemsName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HargaSatuan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalHarga)
+                        </td>
+
+                    </tr>
+                }
             </tbody>
         </table>
         <div class=" col-md-12" style="text-align: right; margin-top: 30px; ">
             <button class="btn btn-sm btn-primary" id="Export"> Export Excel </button>
         </div>
-
-       
     </div>
 </div>
-
 @section Script{
     <script>
         $(document).ready(function () {
@@ -98,66 +95,74 @@
 
             $('#Datatables').DataTable();
 
+
             $('.date-picker').datetimepicker({
                 format: 'D/M/YYYY',
-                useCurrent: true, 
+                useCurrent: true,
             });
 
         });
 
         var PreviewData = [];
-
         $("#SearchForm").submit(function (e) {
             e.preventDefault();
-            $('#previewtbl').html(''); 
-            var url = "../Report/Preview";
+            $('#previewtbl').html('');
+            var url = "../Report/PreviewItems";
             var data = JSON.stringify($("#SearchForm").serializeArray());
             $.post(url, { search: data }).done(function (response) {
 
-                PreviewData = response.data; 
-                var row = ''; 
+                PreviewData = response.data;
+                var row = '';
                 for (var i = 0; i < response.data.length; i++) {
-                    
+
                     var dt = response.data[i];
-                    console.log(dt); 
-                    row += '<tr><td>' + moment(dt.createAt).format('DD/MM/yyyy') + '</td><td>' + dt.location+'</td> <td>' + dt.namaNasabah + '</td><td>' + dt.itemName + '</td><td>' + dt.category + '</td><td>' + dt.hargaSatuan + '</td><td>' + dt.qty + '</td><td>' + dt.unit + '</td><td>' + dt.totalHarga+'</td></tr>';
+                    console.log(dt);
+                    row += '<tr><td>' + dt.itemsName + '</td><td>' + dt.hargaSatuan + '</td><td>' + dt.qty + '</td><td>' + dt.unit + '</td><td>' + dt.totalHarga+'</td></tr>';
                 }
-                $('#previewtbl').append(row); 
+                $('#previewtbl').append(row);
                 console.log(response);
             }).fail(function (a, b, c) {
 
                 alert("failed get data");
 
             });
-            
-        }); 
+
+        });
 
         function EventsListener() {
             $(document).on("click", "#Export", function () {
                 if (PreviewData.length > 0) {
 
-                    var url = "../Report/ExportTransaksiXls";
-                    $.post(url, { datapost: JSON.stringify(PreviewData) }).done(function (response) {
+                    var url = "../Report/ExportItemsXls";
+                    var param = {
+                        StartDate : $("#startDate").val(),
+                        EndDate: $("#endDate").val(),
+                    }
+                    //console.log(params); 
+                    $.post(url, {
+                        datapost: JSON.stringify(PreviewData),
+                        StartDate: $("#startDate").val(),
+                        EndDate: $("#endDate").val()
+                    }).done(function (response) {
                         console.log(response.data);
                         if (response.status) {
 
-                            window.open(response.data); 
+                            window.open(response.data);
 
                         } else {
-                            alert(response.message); 
+                            alert(response.message);
                         }
 
                     }).fail(function (a, b, c) {
-                        alert("Failed Export Excel!"); 
+                        alert("Failed Export Excel!");
 
                     });
                 } else {
-                    alert("No data to export"); 
+                    alert("No data to export");
                 }
-                console.log("Export"); 
+                console.log("Export");
 
             });
         }
     </script>
-
 }

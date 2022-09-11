@@ -7,7 +7,7 @@ namespace KKN_UKK.Models
 {
     public class SearchParameter
     {
-        public DateTime startDate { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set;  }
         public int NasabahId { get; set;  }
     }

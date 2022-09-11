@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="TotalHarga" class="control-label"> Total Harga</label>
-                        <input asp-for="TotalHarga" class="form-control" readonly />
+                        <input asp-for="TotalHarga" class="form-control" id="TotalHarga" readonly />
                         <span asp-validation-for="TotalHarga" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -136,6 +136,8 @@
 
             var Id = $('#Items').val();
             var url = 'GetMasterItems?Id=' + Id;
+            $("#Qty").val('');
+            $("#TotalHarga").val('');
             $.get(url).done(function (response) {
 
                 if (response.status) {

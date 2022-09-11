@@ -311,7 +311,7 @@ namespace KKN_UKK.Controllers
 
         public IActionResult InsertTimbangan(T_TransaksiTimbangan model)
         {
-            
+            model.ItemsName = db.M_MasterSampah.Where(s => s.Id.ToString() == model.Items).FirstOrDefault().Nama; 
             model.CreateAt = DateTime.Now;
             model.CreateBy = HttpContext.Session.GetInt32(accountInfo.UserIdSessions).ToString();
             db.T_TransaksiTimbangan.Add(model);
@@ -337,7 +337,8 @@ namespace KKN_UKK.Controllers
 
         public IActionResult EditTransaksi(T_TransaksiTimbangan data)
         {
-            T_TransaksiTimbangan edit =data; 
+            T_TransaksiTimbangan edit =data;
+            edit.ItemsName = db.M_MasterSampah.Where(s => s.Id.ToString() == data.Items).FirstOrDefault().Nama; 
             edit.UpdateAt = DateTime.Now;
             edit.UpdateBy = HttpContext.Session.GetInt32(accountInfo.UserIdSessions).ToString();
             db.T_TransaksiTimbangan.Update(edit); 
